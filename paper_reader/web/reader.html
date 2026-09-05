@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Paper reader</title>
+  <link rel="stylesheet" href="../assets/reader.css">
+  <script src="../assets/reader.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="identity"><span class="wordmark">PAPER / SOURCE</span><h1 id="paper-title">Loading paper…</h1></div>
+    <a id="download" class="button" hidden>Download PDF</a>
+  </header>
+  <div class="workspace">
+    <aside class="context" aria-label="Original evidence">
+      <p class="eyebrow" id="evidence-label">Original evidence</p>
+      <p id="status" class="status" role="status" aria-live="polite">Loading the original PDF…</p>
+      <blockquote id="quote" hidden></blockquote>
+      <div id="target-pages" class="target-pages" aria-label="Pages containing this evidence"></div>
+      <button id="copy-link" class="button" type="button" hidden>Copy citation link</button>
+      <p id="coverage-warning" class="warning" hidden></p>
+      <section id="outline-section" hidden><h2>Contents</h2><nav id="outline" aria-label="Paper contents"></nav></section>
+      <p class="footnote">Page numbers refer to this saved PDF. Continue asking questions in your chat; each original-text link opens its evidence here.</p>
+    </aside>
+    <main class="document" aria-label="PDF reader">
+      <div class="toolbar">
+        <div class="page-controls">
+          <button id="previous" class="icon-button" type="button" aria-label="Previous page">←</button>
+          <label for="page-number">Page</label><input id="page-number" type="number" min="1" value="1" aria-label="PDF page number">
+          <span id="page-total">/ —</span>
+          <button id="next" class="icon-button" type="button" aria-label="Next page">→</button>
+        </div>
+        <div class="zoom-controls"><label for="zoom">Zoom</label><select id="zoom"><option value="1">Fit width</option><option value="1.25">125%</option><option value="1.5">150%</option><option value="2">200%</option></select><button id="return-evidence" class="button" type="button" hidden>Back to evidence</button></div>
+      </div>
+      <div id="pages" class="pages" tabindex="0" aria-label="Scrollable PDF pages"></div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paper-critical-reading"
+version = "0.2.0"
+description = "Evidence-linked paper reading for Claude and Codex: PDF import, verified quotations, and a local reader."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+dependencies = ["PyMuPDF>=1.24.3,<2"]
+
+[project.optional-dependencies]
+mcp = ["mcp>=1.12,<2"]
+
+[project.scripts]
+paper-reader = "paper_reader.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["paper_reader*"]
+
+[tool.setuptools.package-data]
+paper_reader = ["web/*.html", "web/*.css", "web/*.js"]
