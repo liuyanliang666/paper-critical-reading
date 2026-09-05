@@ -4,7 +4,7 @@
 
 Critical paper reading and follow-up Q&A with **clickable original-text evidence**. Ask a question in your existing Codex or Claude chat; the assistant reads the paper, answers, and adds verified citations. Each link opens the saved PDF at the quoted words with line-by-line boxes and highlights.
 
-The original first-principles critical-reading framework remains available. Focused questions now get focused answers instead of a full report every time.
+The original first-principles critical-reading framework remains available: instead of summarizing what the paper says, it forces a structured breakdown — the formalized problem, why prior methods fail mechanically, which insight the novelty came from (any inspiration not explicitly stated by the paper is flagged as inferred), whether the experiments actually support the claims, a three-layer limitation analysis, and a first-principles reconstruction of how the authors likely arrived at the idea. Focused questions now get focused answers instead of a full report every time; ask for the full review described under "Full-review structure" below when you want it.
 
 ## What is included
 
@@ -157,7 +157,22 @@ These tests do not certify a specific desktop application's UI behavior or every
 | `en/` | `paper-critical-reading` | English |
 | `zh/` | `paper-critical-reading-zh` | Chinese |
 
-Both respond in the conversation's language. Their full-review references preserve: TL;DR, Task, Challenge, Method, Insight & Novelty, Evidence & Validation, Potential Flaw, and Motivation. Unstated inspirations remain labelled as inferred. Quotes can now support multiple claims, within the host's applicable quotation limits.
+Both respond in the conversation's language.
+
+### Full-review structure
+
+| Section | What it answers |
+|---|---|
+| TL;DR | One sentence connecting the method, problem, and result |
+| 1. Task | Formalized input/output space, objective, and metrics |
+| 2. Challenge | Why prior methods fail mechanically, or what tradeoff they face |
+| 3. Method | Neutral pipeline description, no evaluation yet |
+| 4. Insight & Novelty | Problem → insight → concrete design for each main contribution; inspiration not explicitly stated by the authors is marked **inferred** |
+| 5. Evidence & Validation | Whether experiments/proofs actually support the claims, and where the evidence stops |
+| 6. Potential Flaw | Three layers: author-admitted limitations, critically-found limitations, and worth-a-paper research opportunities |
+| 7. Motivation | A first-principles, rhetorical-question reconstruction of how the authors likely arrived at the idea |
+
+Unstated inspirations remain labelled as inferred. Quotes can now support multiple claims, within the host's applicable quotation limits.
 
 ## License
 
