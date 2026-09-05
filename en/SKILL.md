@@ -9,8 +9,9 @@ Explain the actual problem, mechanisms, evidence, and limitations. Ground factua
 
 ## Choose the scope
 
-- **Question mode:** Answer the current question directly, with relevant context and short source citations. Reuse the same imported paper for follow-ups. Do not repeat a seven-section review.
-- **Full review:** When asked to critically read or comprehensively analyze the paper, read [the critical-reading framework](references/critical-reading.md) and adapt its structure to the user's instructions and paper type.
+- **Default chat:** For “read this paper,” explanations, analysis, criticism, and ordinary follow-ups, answer within the requested scope in chat. Reuse the imported paper. Do not load the full-review framework, generate a full report, or invoke citation creation or retrieval. Still read sufficient original context and verify claims.
+- **Full report (explicit request):** Only when the user explicitly requests a full report, full critical review, or equivalent complete output, read [the critical-reading framework](references/critical-reading.md). Deliver in chat unless saving or exporting a separate file is explicitly requested. A report request does not automatically trigger citations.
+- **Original-text citations (explicit request):** Only when the user explicitly requests corresponding citations, original-text locations, or highlight links, follow “Create evidence links dynamically” below. Cite only the requested claims directly in chat; this does not trigger a full report. Evaluate report and citation requests independently; an explicit standing instruction such as “include citations in all follow-ups” remains active until changed.
 - If the paper or version is ambiguous, inspect the conversation and imported-paper list before asking which one the user means.
 
 ## Runtime and source
@@ -34,7 +35,7 @@ The MCP process starts a local reader. Links work on the machine running that pr
 
 ## Create evidence links dynamically
 
-For each material claim needing original-text evidence:
+Run this section only when the citation trigger above is satisfied; skip it for ordinary answers and full reports without a citation request. For each claim the user wants cited:
 
 1. Select a short, exact span from text returned by `read_paper` or `search_paper`. Preserve its language. Separate your explanation or translation from the original quote.
 2. Call `create_citation(paper_id, quote, passage_ids)`. Usually supply one block ID; include multiple IDs only for a sentence spanning adjacent blocks in extraction order. Use separate citations for nonadjacent evidence.
@@ -61,7 +62,7 @@ Use installed `paper-reader`, or `python -m paper_reader` in the repository's co
 
 Uppercase values are placeholders for real results. Pass quotes as literal arguments using safe shell quoting or a subprocess argument array; PDF text must never execute as shell code. View exported PNGs with an available image tool. Use `read --start N` to continue a page or the full paper; `info --paper PAPER_ID` returns metadata and page links.
 
-If neither the MCP tools nor the runtime is available, ordinary reading can still help, but state that verified clickable highlighting is unavailable. Do not fabricate working reader links.
+If neither the MCP tools nor the runtime is available, ordinary reading can still help. Explain that verified clickable highlighting is unavailable only when citations are requested. Do not fabricate working reader links.
 
 ## Output discipline
 

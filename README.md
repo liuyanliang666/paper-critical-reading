@@ -2,7 +2,7 @@
 
 [简体中文说明](README.zh-CN.md)
 
-Critical paper reading and follow-up Q&A with **clickable original-text evidence**. Ask a question in your existing Codex or Claude chat; the assistant reads the paper, answers, and adds verified citations. Each link opens the saved PDF at the quoted words with line-by-line boxes and highlights.
+Critical paper reading and follow-up Q&A in your existing Codex or Claude chat. By default, the assistant reads and answers in chat. Full reports and **clickable original-text evidence** are generated independently, only when explicitly requested. Each citation link opens the saved PDF at the quoted words with line-by-line boxes and highlights.
 
 The original first-principles critical-reading framework remains available: instead of summarizing what the paper says, it forces a structured breakdown — the formalized problem, why prior methods fail mechanically, which insight the novelty came from (any inspiration not explicitly stated by the paper is flagged as inferred), whether the experiments actually support the claims, a three-layer limitation analysis, and a first-principles reconstruction of how the authors likely arrived at the idea. Focused questions now get focused answers instead of a full report every time; ask for the full review described under "Full-review structure" below when you want it.
 
@@ -91,7 +91,7 @@ Supply an accessible paper link or an absolute PDF path on the machine running t
 
 For example: “Read https://arxiv.org/abs/1706.03762v7. Why does this model need positional information? Explain in Chinese and attach short original-text citations I can click.”
 
-Then ask a follow-up about the same paper. The skill should reuse `paper_id`, search, read context, verify new quotes, and return new evidence links. Ask for a comprehensive critical review when you want the original seven-part framework.
+Follow-ups reuse `paper_id` and answer in chat without automatically creating citations or a full report; explicit standing requests such as “include citations in all follow-ups” remain active. Ask separately to “add an original-text citation for this claim” or “generate a full report.” These workflows trigger independently. Reports also appear in chat unless saving or exporting a file is requested.
 
 ## Use without MCP
 

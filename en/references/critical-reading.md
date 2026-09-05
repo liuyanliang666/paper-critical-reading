@@ -1,6 +1,6 @@
 # Full critical-reading framework
 
-Use this for a comprehensive review after following SKILL.md's reading and citation workflow. Focused follow-ups should receive focused answers.
+Use this only for an explicitly requested full report or full critical review, after following SKILL.md's reading workflow. Run the citation workflow only if citations are also explicitly requested. Focused follow-ups should receive focused answers.
 
 ## Core questions
 
@@ -34,13 +34,13 @@ Connect **problem → insight → concrete design** for each main contribution. 
 
 ### 5. Evidence & Validation
 
-Examine datasets, splits, baselines, metrics, uncertainty, compute budgets, and ablations where relevant. Distinguish aggregate improvement from evidence for a particular component. Cite actual setups and results, not merely the abstract's interpretation. Describe concrete comparison weaknesses without speculating about intent.
+Examine datasets, splits, baselines, metrics, uncertainty, compute budgets, and ablations where relevant. Distinguish aggregate improvement from evidence for a particular component. Base the analysis on actual setups and results, not merely the abstract's interpretation; create citations for that evidence when requested. Describe concrete comparison weaknesses without speculating about intent.
 
 ### 6. Potential Flaw
 
 Keep three levels explicit:
 
-- Limitations the authors state, with evidence links.
+- Limitations the authors state, grounded in the corresponding text; add evidence links when requested.
 - Limitations you identify from specific designs, results, or assumptions, labelled as your analysis.
 - Research opportunities suggested by those gaps, with what further evidence would establish their value. Do not force every limitation into a standalone-paper claim.
 
@@ -54,4 +54,4 @@ Reconstruct a plausible path from the problem to the design using first-principl
 - **Survey:** Explain taxonomy and coverage instead of forcing a single task or method. Evaluate its organizing perspective and omissions.
 - **Systems:** Detail architecture and component interactions. Check realistic workloads, resource costs, failures, and deployment conditions.
 
-Place verified source links near the claims they support. Distinguish exact sentence citations, whole-passage links, and page-level visual evidence.
+Only when citations are requested, place verified source links near the claims they support. Distinguish exact sentence citations, whole-passage links, and page-level visual evidence.
