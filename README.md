@@ -2,9 +2,78 @@
 
 [简体中文说明](README.zh-CN.md)
 
-Critical paper reading and follow-up Q&A in your existing Codex or Claude chat. By default, the assistant reads and answers in chat. Full reports and **clickable original-text evidence** are generated independently, only when explicitly requested. Each citation link opens the saved PDF at the quoted words with line-by-line boxes and highlights.
+**Understand papers through first principles and critical thinking. Ground the model's explanations in original evidence.**
 
-The original first-principles critical-reading framework remains available: instead of summarizing what the paper says, it forces a structured breakdown — the formalized problem, why prior methods fail mechanically, which insight the novelty came from (any inspiration not explicitly stated by the paper is flagged as inferred), whether the experiments actually support the claims, a three-layer limitation analysis, and a first-principles reconstruction of how the authors likely arrived at the idea. Focused questions now get focused answers instead of a full report every time; ask for the full review described under "Full-review structure" below when you want it.
+AI can produce a fluent summary without explaining why a method was designed that way. It can also present a plausible inference as something the paper actually says. This repository aims to take reading further: connect the problem, design, and evidence, and make the model's claims possible to check.
+
+It provides a paper-reading skill for Codex or Claude and accompanying local PDF tools. Reading happens primarily in chat: ask questions, explore mechanisms, and challenge conclusions. Request source locations when you want to check a claim, or a full report when you want a systematic review.
+
+## How to understand a paper
+
+The reading follows a chain of questions:
+
+**Why does the problem exist → why this design → what insight led to the contribution → what do the experiments or proofs support → where are the limitations?**
+
+- Start with the task, assumptions, and constraints to explain the mechanisms behind earlier methods' difficulties.
+- Connect the problem, insight, and concrete design to explain how the method works and why it might help.
+- Examine actual experimental settings, comparison conditions, ablations, or proof assumptions to assess the strength of the conclusions.
+- Separate limitations acknowledged by the authors, criticism grounded in evidence, and research opportunities that still need validation.
+
+These questions guide the reading without requiring seven sections in every answer. A focused follow-up may need only a paragraph. When reconstructing a possible path to the design, motivations not explicitly stated in the paper must be labelled as inferred.
+
+## Citations on request. Evidence throughout.
+
+Factual claims about a paper should rest on original content the model has actually read. The skill requires a distinction between **what the authors state, what the model infers, and what the available evidence cannot establish**. An unsuccessful search does not prove an experiment is absent; a partial read must not be presented as a complete review.
+
+When you request a source citation, the model selects relevant original text and the runtime verifies it before generating a link. Clicking opens the saved PDF at the quoted words with line-by-line highlights so you can inspect the evidence yourself. Citations can support any claim you ask to check, not just novelty or limitations.
+
+Text verification rejects fabricated or paraphrased quotations, but cannot automatically establish that an interpretation is correct. The surrounding context and qualifications must still support the claim. This workflow aims to constrain and expose unsupported answers; it does not guarantee that every hallucination is eliminated.
+
+## Read through conversation
+
+After installation, supply an accessible paper link or local PDF path and begin with a question:
+
+> Read https://arxiv.org/abs/1706.03762v7. Explain the problem it addresses and why the method is designed this way.
+
+Follow up on what you want to understand:
+
+> Why might this design work? Which explanations come from the authors, and which are your inferences?
+
+> Do the experiments actually support that conclusion? What conditions matter?
+
+When you want to check a claim:
+
+> Add an original-text citation for that conclusion so I can click through and verify it.
+
+When you want a complete review:
+
+> Generate a full critical-reading report for this paper.
+
+| Request | Behavior |
+|---|---|
+| Read, explain, analyze, or answer a follow-up | Read sufficient context and answer in chat; skip the full-report and citation workflows |
+| Cite a claim, locate original text, or provide a highlight link | Generate evidence links for the requested claims without generating a report |
+| Generate a full report or full critical review | Load the full-review framework and respond in chat; citations are not automatic |
+| Save or export a report | Create a separate file |
+
+Reports and citations require separate explicit requests; you can request both together. Standing instructions such as “include citations in all follow-ups” remain active until changed. Follow-ups reuse the same paper and sufficient existing context, reading more as needed. This avoids unnecessary output and citation work; the amount of reading still depends on the question, with no fixed token budget.
+
+### Full-report structure
+
+Use this framework only when a full report is explicitly requested, adapting it to the paper type:
+
+| Section | Question |
+|---|---|
+| TL;DR | What problem does the method address, and what result was observed? |
+| 1. Task | What are the inputs, outputs, objectives, metrics, and assumptions? |
+| 2. Challenge | Where do earlier methods struggle or face tradeoffs? |
+| 3. Method | What are the information flow, training, and inference procedures? |
+| 4. Insight & Novelty | What insight connects the problem to the design? What is contributed? |
+| 5. Evidence & Validation | What do experiments or proofs support, and where does the evidence stop? |
+| 6. Potential Flaw | What limitations do the authors acknowledge or the analysis identify? Which opportunities need further validation? |
+| 7. Motivation | How could the design follow from the problem? Unstated motivations are labelled as inferred |
+
+A full report requires coverage of the main text and relevant appendices, with any reading gaps disclosed. Theory, survey, and systems papers are assessed using their relevant forms of evidence. See the [full framework](en/references/critical-reading.md).
 
 ## What is included
 
@@ -85,13 +154,7 @@ mkdir -p ~/.claude/skills/paper-critical-reading
 cp -R en/. ~/.claude/skills/paper-critical-reading/
 ```
 
-### Start asking questions
-
 Supply an accessible paper link or an absolute PDF path on the machine running the MCP server. A chat attachment may live in a different sandbox and is not automatically a local file for the server.
-
-For example: “Read https://arxiv.org/abs/1706.03762v7. Why does this model need positional information? Explain in Chinese and attach short original-text citations I can click.”
-
-Follow-ups reuse `paper_id` and answer in chat without automatically creating citations or a full report; explicit standing requests such as “include citations in all follow-ups” remain active. Ask separately to “add an original-text citation for this claim” or “generate a full report.” These workflows trigger independently. Reports also appear in chat unless saving or exporting a file is requested.
 
 ## Use without MCP
 
@@ -150,7 +213,7 @@ Tests generate temporary PDFs with independent source geometry, including two co
 
 These tests do not certify a specific desktop application's UI behavior or every publisher's download flow.
 
-## Language versions and full review
+## Language versions
 
 | Folder | Skill name | Instructions |
 |---|---|---|
@@ -158,21 +221,6 @@ These tests do not certify a specific desktop application's UI behavior or every
 | `zh/` | `paper-critical-reading-zh` | Chinese |
 
 Both respond in the conversation's language.
-
-### Full-review structure
-
-| Section | What it answers |
-|---|---|
-| TL;DR | One sentence connecting the method, problem, and result |
-| 1. Task | Formalized input/output space, objective, and metrics |
-| 2. Challenge | Why prior methods fail mechanically, or what tradeoff they face |
-| 3. Method | Neutral pipeline description, no evaluation yet |
-| 4. Insight & Novelty | Problem → insight → concrete design for each main contribution; inspiration not explicitly stated by the authors is marked **inferred** |
-| 5. Evidence & Validation | Whether experiments/proofs actually support the claims, and where the evidence stops |
-| 6. Potential Flaw | Three layers: author-admitted limitations, critically-found limitations, and worth-a-paper research opportunities |
-| 7. Motivation | A first-principles, rhetorical-question reconstruction of how the authors likely arrived at the idea |
-
-Unstated inspirations remain labelled as inferred. Quotes can now support multiple claims, within the host's applicable quotation limits.
 
 ## License
 
